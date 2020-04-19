@@ -8,11 +8,11 @@ use App\Enum\ResourceStatus;
 use App\Message\DownloadMovieMessage;
 use App\Repository\MovieRepository;
 use App\Repository\TorrentRepository;
-use App\TMDB\Authentication\ApiKeyAuthentication;
-use App\TMDB\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use TMDB\API\Client;
+use TMDB\API\Model\MovieMovieIdGetResponse200;
 use Transmission\Client as TransmissionClient;
 
 class MovieController extends AbstractController
@@ -20,9 +20,9 @@ class MovieController extends AbstractController
     private $tmdbClient;
     private $transmissionClient;
 
-    public function __construct(string $tmdbApiKey, TransmissionClient $transmissionClient)
+    public function __construct(Client $tmdbClient, TransmissionClient $transmissionClient)
     {
-        $this->tmdbClient = Client::create(null, new ApiKeyAuthentication($tmdbApiKey));
+        $this->tmdbClient = $tmdbClient;
         $this->transmissionClient = $transmissionClient;
     }
 
@@ -57,10 +57,9 @@ class MovieController extends AbstractController
      */
     public function addMovie(int $tmdbId, MovieRepository $movieRepository): Response
     {
-        $tmdbMovie = $this->tmdbClient->gETMovieMovieId($tmdbId);
-
-        if (!$tmdbMovie) {
-            return $this->createNotFoundException(sprintf('Movie #%s not found in TMDB', $tmdbId));
+        $tmdbMovie = $this->tmdbClient->getMovieDetails($tmdbId);
+        if (!$tmdbMovie instanceof MovieMovieIdGetResponse200) {
+            throw $this->createNotFoundException(sprintf('Movie #%s not found in TMDB', $tmdbId));
         }
 
         $movie = $movieRepository->findOneBy(['idTmdb' => $tmdbId]);

@@ -2,9 +2,6 @@
 
 namespace App\MessageHandler;
 
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-
 trait BestResultTrait
 {
     private function findBestTorrent(array $results)

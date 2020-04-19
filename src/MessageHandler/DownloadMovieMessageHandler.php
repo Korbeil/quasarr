@@ -8,25 +8,21 @@ use App\Message\DownloadMovieMessage;
 use App\Repository\MovieRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Transmission\Client as TransmissionClient;
 
 final class DownloadMovieMessageHandler implements MessageHandlerInterface
 {
-    use JackettAwareTrait;
-
     private $doctrine;
     private $movieRepository;
+    private $jackettClient;
     private $transmissionClient;
 
-    public function __construct(ManagerRegistry $doctrine,
-        MovieRepository $movieRepository,
-        TransmissionClient $transmissionClient,
-        string $jackettUrl,
-        string $jackettApiKey)
+    public function __construct(ManagerRegistry $doctrine, MovieRepository $movieRepository, HttpClientInterface $jackettClient, TransmissionClient $transmissionClient)
     {
         $this->movieRepository = $movieRepository;
         $this->doctrine = $doctrine;
-        $this->createJackettClient($jackettUrl, $jackettApiKey);
+        $this->jackettClient = $jackettClient;
         $this->transmissionClient = $transmissionClient;
     }
 
