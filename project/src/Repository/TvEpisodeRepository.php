@@ -2,9 +2,9 @@
 
 namespace Quasarr\Repository;
 
-use Quasarr\Entity\TvEpisode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Quasarr\Entity\TvEpisode;
 
 /**
  * @method TvEpisode|null find($id, $lockMode = null, $lockVersion = null)

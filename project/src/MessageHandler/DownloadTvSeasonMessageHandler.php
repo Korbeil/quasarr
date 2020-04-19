@@ -2,6 +2,7 @@
 
 namespace Quasarr\MessageHandler;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Quasarr\Entity\Torrent;
 use Quasarr\Entity\TvEpisode;
 use Quasarr\Enum\ResourceStatus;
@@ -9,7 +10,6 @@ use Quasarr\Message\DownloadTvEpisodeMessage;
 use Quasarr\Message\DownloadTvSeasonMessage;
 use Quasarr\Repository\TvSeasonRepository;
 use Quasarr\Repository\TvShowRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;

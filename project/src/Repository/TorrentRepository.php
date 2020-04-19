@@ -2,9 +2,9 @@
 
 namespace Quasarr\Repository;
 
-use Quasarr\Entity\Torrent;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Quasarr\Entity\Torrent;
 
 /**
  * @method Torrent|null find($id, $lockMode = null, $lockVersion = null)

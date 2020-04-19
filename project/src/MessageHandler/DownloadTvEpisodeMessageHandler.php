@@ -2,13 +2,13 @@
 
 namespace Quasarr\MessageHandler;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Quasarr\Entity\Torrent;
 use Quasarr\Enum\ResourceStatus;
 use Quasarr\Message\DownloadTvEpisodeMessage;
 use Quasarr\Repository\TvEpisodeRepository;
 use Quasarr\Repository\TvSeasonRepository;
 use Quasarr\Repository\TvShowRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Transmission\Client as TransmissionClient;

@@ -2,12 +2,12 @@
 
 namespace Quasarr\Command;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Quasarr\Entity\Movie;
 use Quasarr\Entity\Torrent;
 use Quasarr\Entity\TvEpisode;
 use Quasarr\Entity\TvSeason;
 use Quasarr\Enum\ResourceStatus;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

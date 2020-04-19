@@ -2,11 +2,11 @@
 
 namespace Quasarr\MessageHandler;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Quasarr\Entity\Torrent;
 use Quasarr\Enum\ResourceStatus;
 use Quasarr\Message\DownloadMovieMessage;
 use Quasarr\Repository\MovieRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Transmission\Client as TransmissionClient;

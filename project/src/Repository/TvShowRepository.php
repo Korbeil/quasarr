@@ -2,9 +2,9 @@
 
 namespace Quasarr\Repository;
 
-use Quasarr\Entity\TvShow;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Quasarr\Entity\TvShow;
 
 /**
  * @method TvShow|null find($id, $lockMode = null, $lockVersion = null)

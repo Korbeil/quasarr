@@ -2,9 +2,9 @@
 
 namespace Quasarr\Repository;
 
-use Quasarr\Entity\Movie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Quasarr\Entity\Movie;
 
 /**
  * @method Movie|null find($id, $lockMode = null, $lockVersion = null)
