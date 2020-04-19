@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller;
+namespace Quasarr\Controller;
 
-use App\Entity\Movie;
-use App\Entity\Torrent;
-use App\Enum\ResourceStatus;
-use App\Message\DownloadMovieMessage;
-use App\Repository\MovieRepository;
-use App\Repository\TorrentRepository;
+use Quasarr\Entity\Movie;
+use Quasarr\Entity\Torrent;
+use Quasarr\Enum\ResourceStatus;
+use Quasarr\Message\DownloadMovieMessage;
+use Quasarr\Repository\MovieRepository;
+use Quasarr\Repository\TorrentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

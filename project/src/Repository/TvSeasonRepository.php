@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace Quasarr\Repository;
 
-use App\Entity\TvSeason;
+use Quasarr\Entity\TvSeason;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

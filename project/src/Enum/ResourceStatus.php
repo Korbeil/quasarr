@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enum;
+namespace Quasarr\Enum;
 
 class ResourceStatus
 {

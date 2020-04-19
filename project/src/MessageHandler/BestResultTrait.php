@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MessageHandler;
+namespace Quasarr\MessageHandler;
 
 trait BestResultTrait
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace Quasarr\Repository;
 
-use App\Entity\Movie;
+use Quasarr\Entity\Movie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

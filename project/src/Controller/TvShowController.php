@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller;
+namespace Quasarr\Controller;
 
-use App\Entity\TvSeason;
-use App\Entity\TvShow;
-use App\Enum\ResourceStatus;
-use App\Message\DownloadTvSeasonMessage;
-use App\Repository\TvSeasonRepository;
-use App\Repository\TvShowRepository;
+use Quasarr\Entity\TvSeason;
+use Quasarr\Entity\TvShow;
+use Quasarr\Enum\ResourceStatus;
+use Quasarr\Message\DownloadTvSeasonMessage;
+use Quasarr\Repository\TvSeasonRepository;
+use Quasarr\Repository\TvShowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

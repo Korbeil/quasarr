@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Factory;
+namespace Quasarr\Factory;
 
 use TMDB\API\Authentication\ApiKeyAuthentication;
 use TMDB\API\Client;

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\MessageHandler;
+namespace Quasarr\MessageHandler;
 
-use App\Entity\Torrent;
-use App\Entity\TvEpisode;
-use App\Enum\ResourceStatus;
-use App\Message\DownloadTvEpisodeMessage;
-use App\Message\DownloadTvSeasonMessage;
-use App\Repository\TvSeasonRepository;
-use App\Repository\TvShowRepository;
+use Quasarr\Entity\Torrent;
+use Quasarr\Entity\TvEpisode;
+use Quasarr\Enum\ResourceStatus;
+use Quasarr\Message\DownloadTvEpisodeMessage;
+use Quasarr\Message\DownloadTvSeasonMessage;
+use Quasarr\Repository\TvSeasonRepository;
+use Quasarr\Repository\TvShowRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
