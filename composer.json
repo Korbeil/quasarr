@@ -1,10 +1,20 @@
 {
+    "name": "welcomattic/quasarr",
     "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
     "require": {
         "php": "^7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-redis": "*",
+        "ext-json": "*",
+        "doctrine/annotations": "^1.0",
+        "irazasyed/php-transmission-sdk": "^1.5",
+        "jane-php/jane-php": "dev-master",
+        "knplabs/doctrine-behaviors": "^2.0",
+        "nyholm/psr7": "^1.2",
+        "php-translation/symfony-bundle": "^0.12.1",
+        "phpdocumentor/reflection-docblock": "*",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "5.0.*",
         "symfony/console": "5.0.*",
@@ -16,20 +26,26 @@
         "symfony/http-client": "5.0.*",
         "symfony/intl": "5.0.*",
         "symfony/mailer": "5.0.*",
+        "symfony/messenger": "5.0.*",
         "symfony/monolog-bundle": "^3.1",
-        "symfony/notifier": "5.0.*",
         "symfony/orm-pack": "*",
         "symfony/process": "5.0.*",
+        "symfony/property-access": "5.0.*",
+        "symfony/property-info": "5.0.*",
         "symfony/security-bundle": "5.0.*",
-        "symfony/serializer-pack": "*",
+        "symfony/serializer": "5.0.*",
         "symfony/string": "5.0.*",
         "symfony/translation": "5.0.*",
-        "symfony/twig-pack": "*",
+        "symfony/twig-bundle": "5.0.*",
         "symfony/validator": "5.0.*",
         "symfony/web-link": "5.0.*",
-        "symfony/yaml": "5.0.*"
+        "symfony/webpack-encore-bundle": "^1.7",
+        "symfony/yaml": "5.0.*",
+        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
@@ -77,8 +93,10 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "5.0.*"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
