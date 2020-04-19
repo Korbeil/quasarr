@@ -9,17 +9,15 @@ use App\Message\DownloadTvEpisodeMessage;
 use App\Message\DownloadTvSeasonMessage;
 use App\Repository\TvSeasonRepository;
 use App\Repository\TvShowRepository;
-use App\TMDB\Authentication\ApiKeyAuthentication;
-use App\TMDB\Client;
-use App\TMDB\Model\TvTvIdGetResponse200SeasonsItem;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use TMDB\API\Client;
 use Transmission\Client as TransmissionClient;
 
 final class DownloadTvSeasonMessageHandler implements MessageHandlerInterface
 {
-    use JackettAwareTrait;
     use BestResultTrait;
 
     private $doctrine;
@@ -27,23 +25,23 @@ final class DownloadTvSeasonMessageHandler implements MessageHandlerInterface
     private $tvSeasonRepository;
     private $transmissionClient;
     private $tmdbClient;
+    private $jackettClient;
     private $bus;
 
     public function __construct(ManagerRegistry $doctrine,
         TvShowRepository $tvShowRepository,
         TvSeasonRepository $tvSeasonRepository,
         TransmissionClient $transmissionClient,
-        MessageBusInterface $bus,
-        string $jackettUrl,
-        string $jackettApiKey,
-        string $tmdbApiKey)
+        Client $tmdbClient,
+        HttpClientInterface $jackettClient,
+        MessageBusInterface $bus)
     {
         $this->tvShowRepository = $tvShowRepository;
         $this->tvSeasonRepository = $tvSeasonRepository;
         $this->doctrine = $doctrine;
         $this->transmissionClient = $transmissionClient;
-        $this->createJackettClient($jackettUrl, $jackettApiKey);
-        $this->tmdbClient = Client::create(null, new ApiKeyAuthentication($tmdbApiKey));
+        $this->tmdbClient = $tmdbClient;
+        $this->jackettClient = $jackettClient;
         $this->bus = $bus;
     }
 
@@ -99,7 +97,7 @@ final class DownloadTvSeasonMessageHandler implements MessageHandlerInterface
             // This will avoid to search again full season as we now search by episode.
             $tvSeason->setStatus(ResourceStatus::PROCESSED);
 
-            $tmdbTvShow = $this->tmdbClient->gETTvTvId($tvShow->getIdTmdb());
+            $tmdbTvShow = $this->tmdbClient->getTvShowDetails($tvShow->getIdTmdb());
 
             $tmdbTvSeason = null;
             foreach ($tmdbTvShow->getSeasons() as $season) {

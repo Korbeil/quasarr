@@ -59,7 +59,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "TMDB\\API\\": "generated/TMDB/"
         }
     },
     "autoload-dev": {

@@ -8,12 +8,12 @@ use App\Enum\ResourceStatus;
 use App\Message\DownloadTvSeasonMessage;
 use App\Repository\TvSeasonRepository;
 use App\Repository\TvShowRepository;
-use App\TMDB\Authentication\ApiKeyAuthentication;
-use App\TMDB\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use TMDB\API\Client;
+use TMDB\API\Model\TvTvIdGetResponse200;
 use Transmission\Client as TransmissionClient;
 
 class TvShowController extends AbstractController
@@ -21,9 +21,9 @@ class TvShowController extends AbstractController
     private $tmdbClient;
     private $transmissionClient;
 
-    public function __construct(string $tmdbApiKey, TransmissionClient $transmissionClient)
+    public function __construct(Client $tmdbClient, TransmissionClient $transmissionClient)
     {
-        $this->tmdbClient = Client::create(null, new ApiKeyAuthentication($tmdbApiKey));
+        $this->tmdbClient = $tmdbClient;
         $this->transmissionClient = $transmissionClient;
     }
 
@@ -34,7 +34,11 @@ class TvShowController extends AbstractController
         TvShowRepository $tvShowRepository,
         TvSeasonRepository $tvSeasonRepository): Response
     {
-        $tmdbTvShow = $this->tmdbClient->gETTvTvId($tmdbId);
+        $tmdbTvShow = $this->tmdbClient->getTvShowDetails($tmdbId);
+        if (!$tmdbTvShow instanceof TvTvIdGetResponse200) {
+            throw $this->createNotFoundException(sprintf('TvShow #%s not found in TMDB', $tmdbId));
+        }
+
         $tvShow = $tvShowRepository->findOneBy([
             'idTmdb' => $tmdbId,
         ]);

@@ -5,8 +5,6 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     tmdb_api_key: '%env(TMDB_API_KEY)%'
-    jackett_url: '%env(JACKETT_URL)%'
-    jackett_api_key: '%env(JACKETT_API_KEY)%'
     transmission_host: '%env(TRANSMISSION_HOST)%'
 
 services:
@@ -16,8 +14,6 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
             $tmdbApiKey: '%tmdb_api_key%'
-            $jackettUrl: '%jackett_url%'
-            $jackettApiKey: '%jackett_api_key%'
             $transmissionHost: '%transmission_host%'
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -37,3 +33,7 @@ services:
     Transmission\Client:
         arguments:
             - '%transmission_host%'
+
+    TMDB\API\Client:
+        factory: ['@App\Factory\TMDBClientFactory', 'create']
+        lazy: true
