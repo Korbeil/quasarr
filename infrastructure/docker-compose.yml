@@ -17,7 +17,7 @@ services:
         depends_on:
             - postgres
         volumes:
-            - "../../${PROJECT_DIRECTORY}:/home/app/application:cached"
+            - "../${PROJECT_DIRECTORY}:/home/app/application:cached"
         extra_hosts:
             - "jackett.${PROJECT_ROOT_DOMAIN}:172.17.0.1"
             - "redis.${PROJECT_ROOT_DOMAIN}:172.17.0.1"

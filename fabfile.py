@@ -17,7 +17,7 @@ env.root_domain = env.project_name + '.test'
 # The "frontend" container will receive all the traffic
 env.extra_domains = []
 # This is the host directory containing your PHP application
-env.project_directory = '.'
+env.project_directory = './project'
 
 services_to_build_first = [
     'php-base',
@@ -235,7 +235,7 @@ def docker_compose(command_name):
     with shell_env(**localEnv):
         local('docker-compose -p %s %s %s' % (
             env.project_name,
-            ' '.join('-f \'' + env.root_dir + '/infrastructure/docker/' + file + '\'' for file in env.compose_files),
+            ' '.join('-f \'' + env.root_dir + '/infrastructure/' + file + '\'' for file in env.compose_files),
             command_name
         ))
 
