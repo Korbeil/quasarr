@@ -111,6 +111,9 @@
     "irazasyed/php-transmission-sdk": {
         "version": "v1.5"
     },
+    "jane-php/jane-php": {
+        "version": "6-dev"
+    },
     "jane-php/open-api-runtime": {
         "version": "6-dev"
     },
