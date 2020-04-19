@@ -12,6 +12,6 @@ jobs:
           php-version: 7.3
           extensions: mbstring, fileinfo, json, intl, dom
       - name: install
-        run: composer update --prefer-stable
-      - name: 'php-cs-fixer check'
-        run: 'vendor/bin/php-cs-fixer fix --dry-run --diff'
+        run: cd project && composer update --prefer-stable
+      - name: php-cs-fixer check
+        run: cd project && vendor/bin/php-cs-fixer fix --dry-run --diff
