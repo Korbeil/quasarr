@@ -9,10 +9,7 @@ class GetTvShowDetails extends \Jane\OpenApiRuntime\Client\BaseEndpoint implemen
     /**
      * Get the primary TV show details by id.
 
-    | **Date** | **Change** |
-    | - | - |
-    | July 17, 2018 | We now return `last_episode_to_air` and `next_episode_to_air` fields. |
-    | March 12, 2018 | Networks return proper logos and we introduced SVG support. |
+    | **Date** | **Change** |.
     | March 8, 2018 | The `seasons` field now returns the translated names and overviews. |
      */
     public function __construct(int $tvId)

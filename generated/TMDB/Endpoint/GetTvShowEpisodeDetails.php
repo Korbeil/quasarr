@@ -11,8 +11,7 @@ class GetTvShowEpisodeDetails extends \Jane\OpenApiRuntime\Client\BaseEndpoint i
     /**
      * Get the TV episode details by id.
 
-    | **Date** | **Change** |
-    | - | - |
+    | **Date** | **Change** |.
     | June 1, 2018 | Added the [translations](#endpoint:5SFwZar3LkP99QMp7) method. |
      */
     public function __construct(int $tvId, int $seasonNumber, int $episodeNumber)

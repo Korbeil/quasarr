@@ -93,7 +93,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     /**
      * Get the primary TV show details by id.
 
-    | **Date** | **Change** |
+    | **Date** | **Change** |.
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
@@ -110,7 +110,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     /**
      * Get the TV episode details by id.
 
-    | **Date** | **Change** |
+    | **Date** | **Change** |.
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
