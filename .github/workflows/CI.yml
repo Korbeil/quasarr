@@ -1,0 +1,17 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  cs-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+      - name: setup
+        uses: shivammathur/setup-php@2.0.0
+        with:
+          php-version: 7.2
+          extensions: mbstring, fileinfo, json, intl, dom
+      - name: install
+        run: composer update --prefer-stable
+      - name: 'php-cs-fixer check'
+        run: 'vendor/bin/php-cs-fixer fix --dry-run --diff'
