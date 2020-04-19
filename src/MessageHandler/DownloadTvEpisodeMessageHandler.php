@@ -10,11 +10,11 @@ use App\Repository\TvSeasonRepository;
 use App\Repository\TvShowRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Transmission\Client as TransmissionClient;
 
 final class DownloadTvEpisodeMessageHandler implements MessageHandlerInterface
 {
-    use JackettAwareTrait;
     use BestResultTrait;
 
     private $doctrine;
@@ -22,22 +22,21 @@ final class DownloadTvEpisodeMessageHandler implements MessageHandlerInterface
     private $tvSeasonRepository;
     private $tvEpisodeRepository;
     private $transmissionClient;
-    private $tmdbClient;
+    private $jackettClient;
 
     public function __construct(ManagerRegistry $doctrine,
         TvShowRepository $tvShowRepository,
         TvSeasonRepository $tvSeasonRepository,
         TvEpisodeRepository $tvEpisodeRepository,
         TransmissionClient $transmissionClient,
-        string $jackettUrl,
-        string $jackettApiKey)
+        HttpClientInterface $jackettClient)
     {
         $this->tvShowRepository = $tvShowRepository;
         $this->tvSeasonRepository = $tvSeasonRepository;
         $this->tvEpisodeRepository = $tvEpisodeRepository;
         $this->doctrine = $doctrine;
         $this->transmissionClient = $transmissionClient;
-        $this->createJackettClient($jackettUrl, $jackettApiKey);
+        $this->jackettClient = $jackettClient;
     }
 
     public function __invoke(DownloadTvEpisodeMessage $message)

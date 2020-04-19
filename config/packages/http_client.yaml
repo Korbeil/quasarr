@@ -1,2 +1,7 @@
 framework:
     http_client:
+        scoped_clients:
+            jackett_client:
+                base_uri: '%env(resolve:JACKETT_URL)%'
+                query: { apikey: '%env(resolve:JACKETT_API_KEY)%' }
+                http_version: 2.0
