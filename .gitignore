@@ -25,3 +25,7 @@ yarn-error.log
 /.php_cs
 /.php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
+
+infrastructure/docker/jackett
+infrastructure/docker/transmission
+infrastructure/docker/library
