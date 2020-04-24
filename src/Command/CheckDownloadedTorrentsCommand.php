@@ -14,9 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Transmission\Client;
 
-class CheckTorrentsCommand extends Command
+class CheckDownloadedTorrentsCommand extends Command
 {
-    protected static $defaultName = 'check:torrents';
+    protected static $defaultName = 'check-downloaded-torrents';
 
     private $transmissionClient;
     private $doctrine;
@@ -62,13 +62,15 @@ class CheckTorrentsCommand extends Command
                 'mediaType' => Torrent::MOVIE_TYPE,
             ]);
 
-            if ($torrent instanceof Torrent) {
+            if (!$torrent instanceof Torrent) {
                 // log something
                 continue;
             }
 
             $this->checkTorrent($torrent);
         }
+
+        // @todo: handle tvSeasons and tvEpisodes
 
         return 0;
     }
@@ -78,7 +80,7 @@ class CheckTorrentsCommand extends Command
         /** @var \Transmission\Models\Torrent $transmissionTorrent */
         $transmissionTorrent = $this->transmissionClient->get($torrent->getHash())->first();
 
-        if ($transmissionTorrent->isDone()) {
+        if ($transmissionTorrent && $transmissionTorrent->isDone()) {
             if (Torrent::MOVIE_TYPE === $torrent->getMediaType()) {
                 $movie = $this->movieRepository->find($torrent->getMediaId());
                 $movie->setStatus(ResourceStatus::DOWNLOADED);

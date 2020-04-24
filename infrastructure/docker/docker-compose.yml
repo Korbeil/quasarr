@@ -40,6 +40,11 @@ services:
         volumes:
             - postgres-data:/var/lib/postgresql/data
 
+    cron:
+        build: services/cron
+        volumes:
+            - "../../${PROJECT_DIRECTORY}:/home/app/application:cached"
+
     redis:
         image: redis:5
         volumes:
