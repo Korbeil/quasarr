@@ -132,9 +132,9 @@ def fix_cs(dry_run=False):
     Fix coding standards in code
     """
     if dry_run:
-        docker_compose_run('./vendor/bin/php-cs-fixer fix --config=.php_cs --dry-run --diff', no_deps=True)
+        docker_compose_run('./vendor/bin/php-cs-fixer fix --config=.php_cs.dist --dry-run --diff', no_deps=True)
     else:
-        docker_compose_run('./vendor/bin/php-cs-fixer fix --config=.php_cs', no_deps=True)
+        docker_compose_run('./vendor/bin/php-cs-fixer fix --config=.php_cs.dist', no_deps=True)
 
 
 @task
