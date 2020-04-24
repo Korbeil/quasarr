@@ -13,6 +13,8 @@ use Transmission\Client as TransmissionClient;
 
 final class DownloadMovieMessageHandler implements MessageHandlerInterface
 {
+    use BestResultTrait;
+
     private $doctrine;
     private $movieRepository;
     private $jackettClient;
@@ -37,17 +39,22 @@ final class DownloadMovieMessageHandler implements MessageHandlerInterface
         ]);
 
         $results = json_decode($response->getContent())->Results;
-        $transmissionTorrent = $this->transmissionClient->addUrl($results[0]->Link)->toArray();
 
-        $torrent = new Torrent();
-        $torrent->setHash($transmissionTorrent['hashString'])
-            ->setCompleted(false)
-            ->setMediaId($movie->getId())
-            ->setMediaType(Torrent::MOVIE_TYPE);
-        $this->doctrine->getManager()->persist($torrent);
+        $bestTorrent = $this->findBestTorrent($results, Torrent::MOVIE_TYPE);
 
-        $movie->setStatus(ResourceStatus::DOWNLOADING);
+        if ($bestTorrent) {
+            $transmissionTorrent = $this->transmissionClient->addUrl($bestTorrent->Link)->toArray();
 
-        $this->doctrine->getManager()->flush();
+            $torrent = new Torrent();
+            $torrent->setHash($transmissionTorrent['hashString'])
+                ->setCompleted(false)
+                ->setMediaId($movie->getId())
+                ->setMediaType(Torrent::MOVIE_TYPE);
+            $this->doctrine->getManager()->persist($torrent);
+
+            $movie->setStatus(ResourceStatus::DOWNLOADING);
+
+            $this->doctrine->getManager()->flush();
+        }
     }
 }

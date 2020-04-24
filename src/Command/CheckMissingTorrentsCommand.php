@@ -52,7 +52,7 @@ class CheckMissingTorrentsCommand extends Command
         }
 
         foreach ($this->tvEpisodeRepository->findBy(['status' => ResourceStatus::MISSING]) as $missingEpisode) {
-            $this->bus->dispatch(new DownloadTvEpisodeMessage($missingEpisode->getId()));
+            $this->bus->dispatch(new DownloadTvEpisodeMessage($missingEpisode->getShow()->getId(), $missingEpisode->getSeason()->getId(), $missingEpisode->getId()));
         }
 
         return 0;

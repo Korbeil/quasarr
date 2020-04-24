@@ -47,6 +47,11 @@ final class DownloadTvEpisodeMessageHandler implements MessageHandlerInterface
             'show' => $message->getTvShowId(),
             'season' => $message->getTvSeasonId(),
         ]);
+
+        if (!$tvEpisode) {
+            return;
+        }
+
         $seasonNumberPadded = str_pad($tvEpisode->getSeason()->getNumber(), 2, '0', STR_PAD_LEFT);
         $episodeNumberPadded = str_pad($tvEpisode->getNumber(), 2, '0', STR_PAD_LEFT);
 
@@ -73,7 +78,7 @@ final class DownloadTvEpisodeMessageHandler implements MessageHandlerInterface
             $results = array_merge($results, json_decode($response->getContent())->Results);
         }
 
-        $bestTorrent = $this->findBestTorrent($results);
+        $bestTorrent = $this->findBestTorrent($results, Torrent::TVEPISODE_TYPE);
 
         if ($bestTorrent) {
             $transmissionTorrent = $this->transmissionClient->addUrl($bestTorrent->Link)->toArray();
