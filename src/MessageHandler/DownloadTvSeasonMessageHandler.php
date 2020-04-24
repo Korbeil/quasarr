@@ -78,7 +78,7 @@ final class DownloadTvSeasonMessageHandler implements MessageHandlerInterface
             $results = array_merge($results, json_decode($response->getContent())->Results);
         }
 
-        $bestTorrent = $this->findBestTorrent($results);
+        $bestTorrent = $this->findBestTorrent($results, Torrent::TVSEASON_TYPE);
 
         if ($bestTorrent) {
             $transmissionTorrent = $this->transmissionClient->addUrl($bestTorrent->Link)->toArray();

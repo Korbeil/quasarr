@@ -127,6 +127,18 @@ def reset():
 
 @task
 @with_builder
+def fix_cs(dry_run=False):
+    """
+    Fix coding standards in code
+    """
+    if dry_run:
+        docker_compose_run('./vendor/bin/php-cs-fixer fix --config=.php_cs.dist --dry-run --diff', no_deps=True)
+    else:
+        docker_compose_run('./vendor/bin/php-cs-fixer fix --config=.php_cs.dist', no_deps=True)
+
+
+@task
+@with_builder
 def builder():
     """
     Open a shell (bash) into a builder container
@@ -188,8 +200,8 @@ def stop_workers():
     env.start_workers = False
     with quiet():
         local('docker update --restart=no %s' % (' '.join(workers)))
-#         if os.path.exists(env.root_dir + "/" + env.project_directory + "/vendor/symfony/messenger"):
-#             docker_compose_run('bin/console messenger:stop-workers')
+        if os.path.exists(env.root_dir + "/" + env.project_directory + "/vendor/symfony/messenger"):
+            docker_compose_run('bin/console messenger:stop-workers')
         local('docker stop %s' % (' '.join(workers)))
 
 
