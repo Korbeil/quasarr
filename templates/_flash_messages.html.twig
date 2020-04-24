@@ -5,14 +5,12 @@
     'error': 'danger',
 } %}
 
-{% if app.session is not null and app.session.started %}
-    <div id="flash-messages" class="c-alert">
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ map[label] }}" role="alert">
-                    {{ message|trans }}
-                </div>
-            {% endfor %}
+<div id="flash-messages" class="c-alert">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ map[label] }}" role="alert">
+                {{ message|trans }}
+            </div>
         {% endfor %}
-    </div>
-{% endif %}
+    {% endfor %}
+</div>

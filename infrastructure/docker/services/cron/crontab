@@ -1,0 +1,3 @@
+*/2 * * * * php /home/app/application/bin/console check-downloaded-torrents
+#0,30 * * * * php /home/app/application/bin/console check-missing-torrents
+*/2 * * * * php /home/app/application/bin/console check-missing-torrents
