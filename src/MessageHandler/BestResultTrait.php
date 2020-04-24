@@ -2,9 +2,11 @@
 
 namespace App\MessageHandler;
 
+use App\Entity\Torrent;
+
 trait BestResultTrait
 {
-    private function findBestTorrent(array $results)
+    private function findBestTorrent(array $results, string $type = Torrent::MOVIE_TYPE)
     {
         $bestResult = [
             'score' => 0,
@@ -16,6 +18,15 @@ trait BestResultTrait
 
             if ($result->Seeders >= 3 && $result->Seeders > $result->Peers) {
                 ++$score;
+            }
+
+            if (Torrent::TVSEASON_TYPE === $type) {
+                if (preg_match('/e\d+|episode|episode\d+|ep|ep\d+/', strtolower($result->Title))) {
+                    // it's episode
+                    continue;
+                } else {
+                    ++$score;
+                }
             }
 
             if ($score > $bestResult['score']) {

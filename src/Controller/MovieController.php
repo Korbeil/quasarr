@@ -31,8 +31,9 @@ class MovieController extends AbstractController
      */
     public function list(TorrentRepository $torrentRepository, MovieRepository $movieRepository): Response
     {
-        $movies = $movieRepository->findAll();
+        $movies = $movieRepository->findBy(['status' => ResourceStatus::DOWNLOADING]);
         $torrents = [];
+        $tmdbMovies = [];
 
         foreach ($movies as $movie) {
             $torrent = $torrentRepository->findOneBy([
@@ -41,13 +42,19 @@ class MovieController extends AbstractController
             ]);
 
             if ($torrent instanceof Torrent) {
-                $transmissionTorrents = $this->transmissionClient->get($torrent->getHash());
-                $torrents[$movie->getId()] = $transmissionTorrents->first();
+                $transmissionTorrents = $this->transmissionClient->get($torrent->getHash())->first();
+
+                if ($transmissionTorrents) {
+                    $torrents[$movie->getId()] = $transmissionTorrents;
+                }
             }
+
+            $tmdbMovies[$movie->getId()] = $this->tmdbClient->getMovieDetails($movie->getIdTmdb());
         }
 
         return $this->render('movies/list.html.twig', [
             'movies' => $movies,
+            'tmdbMovies' => $tmdbMovies,
             'torrents' => $torrents,
         ]);
     }

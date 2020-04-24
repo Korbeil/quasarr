@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Torrent;
 use App\Entity\TvSeason;
 use App\Entity\TvShow;
 use App\Enum\ResourceStatus;
 use App\Message\DownloadTvSeasonMessage;
+use App\Repository\TorrentRepository;
+use App\Repository\TvEpisodeRepository;
 use App\Repository\TvSeasonRepository;
 use App\Repository\TvShowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +28,69 @@ class TvShowController extends AbstractController
     {
         $this->tmdbClient = $tmdbClient;
         $this->transmissionClient = $transmissionClient;
+    }
+
+    /**
+     * @Route("/tvshows", name="list_tvshows")
+     */
+    public function list(TorrentRepository $torrentRepository,
+        TvSeasonRepository $tvSeasonRepository,
+        TvEpisodeRepository $tvEpisodeRepository): Response
+    {
+        $tvSeasons = $tvSeasonRepository->findBy(['status' => ResourceStatus::DOWNLOADING]);
+        $tvEpisodes = $tvEpisodeRepository->findBy(['status' => ResourceStatus::DOWNLOADING]);
+        $torrents = [];
+        $tmdbTvSeasons = [];
+        $tmdbTvEpisodes = [];
+
+        foreach ($tvSeasons as $tvSeason) {
+            $torrent = $torrentRepository->findOneBy([
+                'mediaType' => Torrent::TVSEASON_TYPE,
+                'mediaId' => $tvSeason->getId(),
+            ]);
+
+            if ($torrent instanceof Torrent) {
+                $transmissionTorrents = $this->transmissionClient->get($torrent->getHash())->first();
+
+                if ($transmissionTorrents) {
+                    $torrents[$tvSeason->getId()] = $transmissionTorrents;
+                }
+            }
+
+            $_tmdbTvSeasons = $this->tmdbClient->getTvShowDetails($tvSeason->getTvShow()->getIdTmdb())->getSeasons();
+
+            foreach ($_tmdbTvSeasons as $tmdbTvSeason) {
+                if ($tmdbTvSeason->getSeasonNumber() === $tvSeason->getNumber()) {
+                    $tmdbTvSeasons[$tvSeason->getId()] = $tmdbTvSeason;
+                    break;
+                }
+            }
+        }
+
+        foreach ($tvEpisodes as $tvEpisode) {
+            $torrent = $torrentRepository->findOneBy([
+                'mediaType' => Torrent::TVEPISODE_TYPE,
+                'mediaId' => $tvEpisode->getId(),
+            ]);
+
+            if ($torrent instanceof Torrent) {
+                $transmissionTorrents = $this->transmissionClient->get($torrent->getHash())->first();
+
+                if ($transmissionTorrents) {
+                    $torrents[$tvEpisode->getId()] = $transmissionTorrents;
+                }
+            }
+
+            $tmdbTvEpisodes[$tvEpisode->getId()] = $this->tmdbClient->getTvShowEpisodeDetails($tvEpisode->getShow()->getIdTmdb(), $tvEpisode->getSeason()->getNumber(), $tvEpisode->getNumber());
+        }
+
+        return $this->render('tv_shows/list.html.twig', [
+            'tvSeasons' => $tvSeasons,
+            'tmdbTvSeasons' => $tmdbTvSeasons,
+            'tvEpisodes' => $tvEpisodes,
+            'tmdbTvEpisodes' => $tmdbTvEpisodes,
+            'torrents' => $torrents,
+        ]);
     }
 
     /**
@@ -71,7 +137,7 @@ class TvShowController extends AbstractController
         $tvShow = $tvShowRepository->findOneBy(['idTmdb' => $tmdbId]);
 
         if (!$tvShow instanceof TvShow) {
-            $tmdbTvShow = $this->tmdbClient->gETTvTvId($tmdbId);
+            $tmdbTvShow = $this->tmdbClient->getTvShowDetails($tmdbId);
 
             $tvShow = new TvShow();
             $tvShow->setIdTmdb($tmdbTvShow->getId())
