@@ -6,6 +6,12 @@ const badgeClasses = {
 
 const components = document.querySelectorAll('[data-component="download-progress"]')
 components.forEach((component) => {
+    const status = component.dataset.status
+
+    if (status === 'Missing') {
+        return;
+    }
+
     const statusUrl = component.dataset.statusUrl
     const resumeUrl = component.dataset.resumeUrl
     const pauseUrl = component.dataset.pauseUrl

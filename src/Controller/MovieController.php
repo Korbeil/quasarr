@@ -31,7 +31,7 @@ class MovieController extends AbstractController
      */
     public function list(TorrentRepository $torrentRepository, MovieRepository $movieRepository): Response
     {
-        $movies = $movieRepository->findBy(['status' => ResourceStatus::DOWNLOADING]);
+        $movies = $movieRepository->findBy(['status' => [ResourceStatus::DOWNLOADING, ResourceStatus::MISSING]]);
         $torrents = [];
         $tmdbMovies = [];
 

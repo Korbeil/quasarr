@@ -37,8 +37,8 @@ class TvShowController extends AbstractController
         TvSeasonRepository $tvSeasonRepository,
         TvEpisodeRepository $tvEpisodeRepository): Response
     {
-        $tvSeasons = $tvSeasonRepository->findBy(['status' => ResourceStatus::DOWNLOADING]);
-        $tvEpisodes = $tvEpisodeRepository->findBy(['status' => ResourceStatus::DOWNLOADING]);
+        $tvSeasons = $tvSeasonRepository->findBy(['status' => [ResourceStatus::DOWNLOADING, ResourceStatus::MISSING]]);
+        $tvEpisodes = $tvEpisodeRepository->findBy(['status' => [ResourceStatus::DOWNLOADING, ResourceStatus::MISSING]]);
         $torrents = [];
         $tmdbTvSeasons = [];
         $tmdbTvEpisodes = [];

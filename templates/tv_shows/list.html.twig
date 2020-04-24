@@ -12,129 +12,129 @@
     <div class="container-xl mt-5">
         <h2>📺 TV Shows</h2>
         <div class="row row-cols-1 row-cols-md-12 mt-5 mb-5">
-            {% if torrents is not empty %}
-                {% set badgeClasses = {
-                    Downloading: 'primary',
-                    Downloaded: 'success',
-                    Paused: 'warning'
-                } %}
-                {% for tvSeason in tvSeasons %}
-                    <div class="col mb-4">
-                        <div class="card"
-                             data-component="download-progress"
-                             data-status-url="{{ path('torrent_status', { hash: torrents[tvSeason.id].hashString }) }}"
-                             data-resume-url="{{ path('torrent_resume', { hash: torrents[tvSeason.id].hashString }) }}"
-                             data-pause-url="{{ path('torrent_pause', { hash: torrents[tvSeason.id].hashString }) }}"
-                             data-hash="{{ torrents[tvSeason.id].hashString }}">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <img src="https://image.tmdb.org/t/p/w220_and_h330_face{{ tmdbTvSeasons[tvSeason.id].posterPath }}"
-                                         class="d-inline-block"
-                                         alt="{{ tvSeason.tvShow.title ~ tvSeason.number }}"
-                                         width="55"
-                                         height="82">
-                                    {{ tvSeason.tvShow.title ~ ' S' ~ (tvSeason.number|padLeft) }}
-                                    {% if tvSeason.id in torrents|keys %}
-                                        <span class="badge badge-{{ badgeClasses[torrents[tvSeason.id].statusString] }} float-right"
-                                              id="title-badge-{{ torrents[tvSeason.id].hashString }}">
-                                        {{ torrents[tvSeason.id].statusString  }}
-                                    </span>
-                                    {% else %}
-                                        <span class="badge badge-secondary float-right">
-                                        Missing
-                                    </span>
-                                    {% endif %}
-                                </h5>
-                                <div class="card-text d-flex">
-                                    {% if tvSeason.id in torrents|keys %}
-                                        <div class="progress flex-fill align-self-center mr-3">
-                                            <div class="progress-bar bg-{{ badgeClasses[torrents[tvSeason.id].statusString] }}"
-                                                 id="progress-{{ torrents[tvSeason.id].hashString }}"
-                                                 role="progressbar"
-                                                 style="width: {{ torrents[tvSeason.id].percentDone(true) }}%"
-                                                 aria-valuenow="{{ torrents[tvSeason.id].percentDone(true) }}"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100">
-                                                {{ torrents[tvSeason.id].percentDone(true) }}%
-                                            </div>
+            {% set badgeClasses = {
+                Downloading: 'primary',
+                Downloaded: 'success',
+                Paused: 'warning'
+            } %}
+            {% for tvSeason in tvSeasons %}
+                <div class="col mb-4">
+                    <div class="card"
+                         data-component="download-progress"
+                         data-status-url="{{ torrents is not empty ? path('torrent_status', { hash: torrents[tvSeason.id].hashString }) }}"
+                         data-resume-url="{{ torrents is not empty ? path('torrent_resume', { hash: torrents[tvSeason.id].hashString }) }}"
+                         data-pause-url="{{ torrents is not empty ? path('torrent_pause', { hash: torrents[tvSeason.id].hashString }) }}"
+                         data-hash="{{ torrents is not empty ? torrents[tvSeason.id].hashString }}"
+                         data-status="{{ torrents is not empty ? torrents[tvSeason.id].statusString : 'Missing' }}">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <img src="https://image.tmdb.org/t/p/w220_and_h330_face{{ tmdbTvSeasons[tvSeason.id].posterPath }}"
+                                     class="d-inline-block"
+                                     alt="{{ tvSeason.tvShow.title ~ tvSeason.number }}"
+                                     width="55"
+                                     height="82">
+                                {{ tvSeason.tvShow.title ~ ' S' ~ (tvSeason.number|padLeft) }}
+                                {% if tvSeason.id in torrents|keys %}
+                                    <span class="badge badge-{{ badgeClasses[torrents[tvSeason.id].statusString] }} float-right"
+                                          id="title-badge-{{ torrents[tvSeason.id].hashString }}">
+                                    {{ torrents[tvSeason.id].statusString  }}
+                                </span>
+                                {% else %}
+                                    <span class="badge badge-secondary float-right">
+                                    Missing
+                                </span>
+                                {% endif %}
+                            </h5>
+                            <div class="card-text d-flex">
+                                {% if tvSeason.id in torrents|keys %}
+                                    <div class="progress flex-fill align-self-center mr-3">
+                                        <div class="progress-bar bg-{{ badgeClasses[torrents[tvSeason.id].statusString] }}"
+                                             id="progress-{{ torrents[tvSeason.id].hashString }}"
+                                             role="progressbar"
+                                             style="width: {{ torrents[tvSeason.id].percentDone(true) }}%"
+                                             aria-valuenow="{{ torrents[tvSeason.id].percentDone(true) }}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100">
+                                            {{ torrents[tvSeason.id].percentDone(true) }}%
                                         </div>
-                                        <div class="btn-group btn-group-sm">
-                                            <button type="button"
-                                                    id="resume-torrent"
-                                                    class="btn btn-primary">
-                                                ▶
-                                            </button>
-                                            <button type="button"
-                                                    id="pause-torrent"
-                                                    class="btn btn-warning">
-                                                ⏸
-                                            </button>
-                                        </div>
-                                    {% endif %}
-                                </div>
+                                    </div>
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button"
+                                                id="resume-torrent"
+                                                class="btn btn-primary">
+                                            ▶
+                                        </button>
+                                        <button type="button"
+                                                id="pause-torrent"
+                                                class="btn btn-warning">
+                                            ⏸
+                                        </button>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                {% else %}
-                    <p>{{ 'tv_seasons.list.empty'|trans }}</p>
-                {% endfor %}
+                </div>
+            {% else %}
+                <p>{{ 'tv_seasons.list.empty'|trans }}</p>
+            {% endfor %}
 
-                {% for tvEpisode in tvEpisodes %}
-                    <div class="col mb-4">
-                        <div class="card"
-                             data-component="download-progress"
-                             data-status-url="{{ path('torrent_status', { hash: torrents[tvEpisode.id].hashString }) }}"
-                             data-resume-url="{{ path('torrent_resume', { hash: torrents[tvEpisode.id].hashString }) }}"
-                             data-pause-url="{{ path('torrent_pause', { hash: torrents[tvEpisode.id].hashString }) }}"
-                             data-hash="{{ torrents[tvEpisode.id].hashString }}">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    {{ tvEpisode.show.title ~ ' S' ~ (tvEpisode.season.number|padLeft) ~ 'E' ~ (tvEpisode.number|padLeft) }}
-                                    {% if tvEpisode.id in torrents|keys %}
-                                        <span class="badge badge-{{ badgeClasses[torrents[tvEpisode.id].statusString] }} float-right"
-                                              id="title-badge-{{ torrents[tvEpisode.id].hashString }}">
-                                        {{ torrents[tvEpisode.id].statusString  }}
-                                    </span>
-                                    {% else %}
-                                        <span class="badge badge-secondary float-right">
-                                        Missing
-                                    </span>
-                                    {% endif %}
-                                </h5>
-                                <div class="card-text d-flex">
-                                    {% if tvEpisode.id in torrents|keys %}
-                                        <div class="progress flex-fill align-self-center mr-3">
-                                            <div class="progress-bar bg-{{ badgeClasses[torrents[tvEpisode.id].statusString] }}"
-                                                 id="progress-{{ torrents[tvEpisode.id].hashString }}"
-                                                 role="progressbar"
-                                                 style="width: {{ torrents[tvEpisode.id].percentDone(true) }}%"
-                                                 aria-valuenow="{{ torrents[tvEpisode.id].percentDone(true) }}"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100">
-                                                {{ torrents[tvEpisode.id].percentDone(true) }}%
-                                            </div>
+            {% for tvEpisode in tvEpisodes %}
+                <div class="col mb-4">
+                    <div class="card"
+                         data-component="download-progress"
+                         data-status-url="{{ torrents is not empty ? path('torrent_status', { hash: torrents[tvEpisode.id].hashString }) }}"
+                         data-resume-url="{{ torrents is not empty ? path('torrent_resume', { hash: torrents[tvEpisode.id].hashString }) }}"
+                         data-pause-url="{{ torrents is not empty ? path('torrent_pause', { hash: torrents[tvEpisode.id].hashString }) }}"
+                         data-hash="{{ torrents is not empty ? torrents[tvEpisode.id].hashString }}"
+                         data-status="{{ torrents is not empty ? torrents[tvEpisode.id].statusString : 'Missing' }}">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ tvEpisode.show.title ~ ' S' ~ (tvEpisode.season.number|padLeft) ~ 'E' ~ (tvEpisode.number|padLeft) }}
+                                {% if tvEpisode.id in torrents|keys %}
+                                    <span class="badge badge-{{ badgeClasses[torrents[tvEpisode.id].statusString] }} float-right"
+                                          id="title-badge-{{ torrents[tvEpisode.id].hashString }}">
+                                    {{ torrents[tvEpisode.id].statusString  }}
+                                </span>
+                                {% else %}
+                                    <span class="badge badge-secondary float-right">
+                                    Missing
+                                </span>
+                                {% endif %}
+                            </h5>
+                            <div class="card-text d-flex">
+                                {% if tvEpisode.id in torrents|keys %}
+                                    <div class="progress flex-fill align-self-center mr-3">
+                                        <div class="progress-bar bg-{{ badgeClasses[torrents[tvEpisode.id].statusString] }}"
+                                             id="progress-{{ torrents[tvEpisode.id].hashString }}"
+                                             role="progressbar"
+                                             style="width: {{ torrents[tvEpisode.id].percentDone(true) }}%"
+                                             aria-valuenow="{{ torrents[tvEpisode.id].percentDone(true) }}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100">
+                                            {{ torrents[tvEpisode.id].percentDone(true) }}%
                                         </div>
-                                        <div class="btn-group btn-group-sm">
-                                            <button type="button"
-                                                    id="resume-torrent"
-                                                    class="btn btn-primary">
-                                                ▶
-                                            </button>
-                                            <button type="button"
-                                                    id="pause-torrent"
-                                                    class="btn btn-warning">
-                                                ⏸
-                                            </button>
-                                        </div>
-                                    {% endif %}
-                                </div>
+                                    </div>
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button"
+                                                id="resume-torrent"
+                                                class="btn btn-primary">
+                                            ▶
+                                        </button>
+                                        <button type="button"
+                                                id="pause-torrent"
+                                                class="btn btn-warning">
+                                            ⏸
+                                        </button>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                {% else %}
-                    <p>{{ 'tv_episodes.list.empty'|trans }}</p>
-                {% endfor %}
-            {% endif %}
+                </div>
+            {% else %}
+                <p>{{ 'tv_episodes.list.empty'|trans }}</p>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
