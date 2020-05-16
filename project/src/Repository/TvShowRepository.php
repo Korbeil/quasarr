@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repository;
+namespace Quasarr\Repository;
 
-use App\Entity\TvShow;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Quasarr\Entity\TvShow;
 
 /**
  * @method TvShow|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,33 +18,4 @@ class TvShowRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, TvShow::class);
     }
-
-    // /**
-    //  * @return TvShow[] Returns an array of TvShow objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?TvShow
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

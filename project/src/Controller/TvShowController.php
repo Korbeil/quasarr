@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Controller;
+namespace Quasarr\Controller;
 
-use App\Entity\Torrent;
-use App\Entity\TvSeason;
-use App\Entity\TvShow;
-use App\Enum\ResourceStatus;
-use App\Message\DownloadTvSeasonMessage;
-use App\Repository\TorrentRepository;
-use App\Repository\TvEpisodeRepository;
-use App\Repository\TvSeasonRepository;
-use App\Repository\TvShowRepository;
+use Quasarr\Entity\Torrent;
+use Quasarr\Entity\TvSeason;
+use Quasarr\Entity\TvShow;
+use Quasarr\Enum\ResourceStatus;
+use Quasarr\Message\DownloadTvSeasonMessage;
+use Quasarr\Repository\TorrentRepository;
+use Quasarr\Repository\TvEpisodeRepository;
+use Quasarr\Repository\TvSeasonRepository;
+use Quasarr\Repository\TvShowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

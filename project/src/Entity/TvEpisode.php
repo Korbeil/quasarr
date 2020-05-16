@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entity;
+namespace Quasarr\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\TvEpisodeRepository")
+ * @ORM\Entity(repositoryClass="Quasarr\Repository\TvEpisodeRepository")
  */
 class TvEpisode implements TimestampableInterface
 {
@@ -31,13 +31,13 @@ class TvEpisode implements TimestampableInterface
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TvSeason", inversedBy="episodes")
+     * @ORM\ManyToOne(targetEntity="Quasarr\Entity\TvSeason", inversedBy="episodes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $season;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TvShow", inversedBy="episodes")
+     * @ORM\ManyToOne(targetEntity="Quasarr\Entity\TvShow", inversedBy="episodes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $show;

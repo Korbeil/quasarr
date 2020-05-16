@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace Quasarr\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

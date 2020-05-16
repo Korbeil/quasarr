@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace Quasarr\Controller;
 
-use App\Entity\Movie;
-use App\Repository\MovieRepository;
+use Quasarr\Entity\Movie;
+use Quasarr\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

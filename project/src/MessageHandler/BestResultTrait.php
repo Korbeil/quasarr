@@ -1,8 +1,8 @@
 <?php
 
-namespace App\MessageHandler;
+namespace Quasarr\MessageHandler;
 
-use App\Entity\Torrent;
+use Quasarr\Entity\Torrent;
 
 trait BestResultTrait
 {
