@@ -19,6 +19,6 @@ final class TMDBClientFactory
 
     public function create(): Client
     {
-        return Client::create(null, new ApiKeyAuthentication($this->tmdbApiKey));
+        return Client::create(null, [new ApiKeyAuthentication($this->tmdbApiKey)]);
     }
 }

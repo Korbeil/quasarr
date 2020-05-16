@@ -3,6 +3,7 @@
 namespace TMDB\API\Normalizer;
 
 use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -28,6 +29,12 @@ class TvTvIdGetResponse200CreatedByItemNormalizer implements DenormalizerInterfa
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
+        }
         $object = new \TMDB\API\Model\TvTvIdGetResponse200CreatedByItem();
         if (\array_key_exists('id', $data)) {
             $object->setId($data['id']);

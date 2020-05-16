@@ -3,6 +3,7 @@
 namespace TMDB\API\Normalizer;
 
 use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -28,6 +29,12 @@ class TvListResultObjectNormalizer implements DenormalizerInterface, NormalizerI
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
+        }
         $object = new \TMDB\API\Model\TvListResultObject();
         if (\array_key_exists('poster_path', $data) && null !== $data['poster_path']) {
             $object->setPosterPath($data['poster_path']);
@@ -105,8 +112,6 @@ class TvListResultObjectNormalizer implements DenormalizerInterface, NormalizerI
         }
         if (null !== $object->getFirstAirDate()) {
             $data['first_air_date'] = $object->getFirstAirDate()->format('Y-m-d');
-        } else {
-            $data['first_air_date'] = null;
         }
         if (null !== $object->getOriginCountry()) {
             $values = [];
