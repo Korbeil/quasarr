@@ -17,7 +17,7 @@ env.root_domain = env.project_name + '.test'
 # The "frontend" container will receive all the traffic
 env.extra_domains = []
 # This is the host directory containing your PHP application
-env.project_directory = '.'
+env.project_directory = 'project/'
 
 services_to_build_first = [
     'php-base',
