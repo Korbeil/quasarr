@@ -25,7 +25,7 @@ When one of them is downloaded, we symlink it to a library directory which can b
 ### Requirements
 
 - Docker
-- Python
+- Python 3.x
 
 ## Acknowledgments
 
