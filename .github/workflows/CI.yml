@@ -13,6 +13,6 @@ jobs:
           extensions: mbstring, fileinfo, json, intl, dom
           tools: php-cs-fixer:2.16.3
       - name: install
-        run: composer update --prefer-stable
+        run: cd project && composer update --prefer-stable
       - name: 'php-cs-fixer check'
-        run: 'vendor/bin/php-cs-fixer fix --dry-run --diff'
+        run: cd project && vendor/bin/php-cs-fixer fix --dry-run --diff
