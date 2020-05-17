@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Command;
+namespace Quasarr\Command;
 
-use App\Entity\Movie;
-use App\Entity\TvEpisode;
-use App\Entity\TvSeason;
-use App\Enum\ResourceStatus;
-use App\Message\DownloadMovieMessage;
-use App\Message\DownloadTvEpisodeMessage;
-use App\Message\DownloadTvSeasonMessage;
 use Doctrine\Persistence\ManagerRegistry;
+use Quasarr\Entity\Movie;
+use Quasarr\Entity\TvEpisode;
+use Quasarr\Entity\TvSeason;
+use Quasarr\Enum\ResourceStatus;
+use Quasarr\Message\DownloadMovieMessage;
+use Quasarr\Message\DownloadTvEpisodeMessage;
+use Quasarr\Message\DownloadTvSeasonMessage;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

@@ -59,13 +59,13 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/",
+            "Quasarr\\": "src/",
             "TMDB\\API\\": "generated/TMDB/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "Quasarr\\Tests\\": "tests/"
         }
     },
     "replace": {

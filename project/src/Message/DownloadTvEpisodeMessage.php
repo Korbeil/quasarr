@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Message;
+namespace Quasarr\Message;
 
 final class DownloadTvEpisodeMessage
 {
