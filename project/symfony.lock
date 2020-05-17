@@ -111,8 +111,28 @@
     "irazasyed/php-transmission-sdk": {
         "version": "v1.5"
     },
-    "jane-php/jane-php": {
-        "version": "6-dev"
+    "jane-php/json-schema": {
+        "version": "5.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "5.0",
+            "ref": "b3170e100a4eb30b4114ff3d926fad06cf923d7e"
+        },
+        "files": [
+            "bin/jane-generate",
+            "config/jane/config.php",
+            "config/packages/jane.yaml"
+        ]
+    },
+    "jane-php/json-schema-runtime": {
+        "version": "v6.0.0"
+    },
+    "jane-php/open-api-3": {
+        "version": "v6.0.0"
+    },
+    "jane-php/open-api-common": {
+        "version": "v6.0.0"
     },
     "jane-php/open-api-runtime": {
         "version": "6-dev"

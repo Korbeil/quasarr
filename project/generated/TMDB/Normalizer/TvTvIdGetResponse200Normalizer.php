@@ -3,6 +3,7 @@
 namespace TMDB\API\Normalizer;
 
 use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -28,6 +29,12 @@ class TvTvIdGetResponse200Normalizer implements DenormalizerInterface, Normalize
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
+        }
         $object = new \TMDB\API\Model\TvTvIdGetResponse200();
         if (\array_key_exists('backdrop_path', $data) && null !== $data['backdrop_path']) {
             $object->setBackdropPath($data['backdrop_path']);
@@ -174,8 +181,6 @@ class TvTvIdGetResponse200Normalizer implements DenormalizerInterface, Normalize
         }
         if (null !== $object->getFirstAirDate()) {
             $data['first_air_date'] = $object->getFirstAirDate()->format('Y-m-d');
-        } else {
-            $data['first_air_date'] = null;
         }
         if (null !== $object->getGenres()) {
             $values_2 = [];
@@ -202,8 +207,6 @@ class TvTvIdGetResponse200Normalizer implements DenormalizerInterface, Normalize
         }
         if (null !== $object->getLastAirDate()) {
             $data['last_air_date'] = $object->getLastAirDate()->format('Y-m-d');
-        } else {
-            $data['last_air_date'] = null;
         }
         if (null !== $object->getLastEpisodeToAir()) {
             $data['last_episode_to_air'] = $this->normalizer->normalize($object->getLastEpisodeToAir(), 'json', $context);
